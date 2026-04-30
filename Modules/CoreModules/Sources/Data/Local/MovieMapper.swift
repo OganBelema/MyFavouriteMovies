@@ -6,8 +6,11 @@
 //
 import Domain
 
-struct MovieMapper: MapperProtocol {
-    func map(_ input: MovieEntity) -> Movie {
+public struct MovieMapper: MapperProtocol, Sendable {
+
+    public init() {}
+    
+    public func map(_ input: MovieEntity) -> Movie {
         return Movie(
             id: Int(input.id),
             title: input.title ?? "",

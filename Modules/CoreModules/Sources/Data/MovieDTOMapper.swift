@@ -7,7 +7,9 @@
 import CoreData
 import Domain
 
-struct MovieDTOMapper: PersistenceMapperProtocol {
+public struct MovieDTOMapper: PersistenceMapperProtocol, Sendable {
+
+    public init() {}
 
     func map(_ input: MovieDTO, context: NSManagedObjectContext) -> MovieEntity {
         let movie = MovieEntity(context: context)

@@ -6,8 +6,11 @@
 //
 import Domain
 
-struct FavouriteMovieMapper: MapperProtocol {
-    func map(_ imput: FavouriteMovieEntity) -> FavouriteMovie {
+public struct FavouriteMovieMapper: MapperProtocol, Sendable {
+
+    public init() {}
+
+    public func map(_ imput: FavouriteMovieEntity) -> FavouriteMovie {
         return FavouriteMovie(id: Int(imput.id))
     }
 }

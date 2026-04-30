@@ -6,7 +6,7 @@
 //
 import Domain
 
-final class MovieRepository: RepositoryProtocol {
+public final class MovieRepository: RepositoryProtocol {
 
     private let movieService: MovieServiceProtocol
     private let coreDataStack: CoreDataStack
@@ -15,7 +15,7 @@ final class MovieRepository: RepositoryProtocol {
     private let movieEntityMapper: MovieEntityMapper
     private let favoriteMovieMapper: FavouriteMovieMapper
 
-    init(
+    public init(
         movieService: MovieServiceProtocol,
         coreDataStack: CoreDataStack,
         movieDTOMapper: MovieDTOMapper,
@@ -31,27 +31,21 @@ final class MovieRepository: RepositoryProtocol {
         self.favoriteMovieMapper = favoriteMovieMapper
     }
 
-    func getMovies() async throws -> [Movie] {
+    public func getMovies() async throws -> [Movie] {
         let movieResponse = try await movieService.fetchPopularMovies()
         try await coreDataStack.performWrite { [movieDTOMapper] context in
             for movie in movieResponse.results {
                 _ = movieDTOMapper.map(movie, context: context)
             }
         }
-        return try await coreDataStack.fetchMovies().map { movie in
-            movieMapper.map(movie)
-        }
+        return try await coreDataStack.fetchMovies(movieMapper: movieMapper)
     }
 
-    func getMovie(id: Int) async throws -> Movie? {
-        let result = try await coreDataStack.getMovie(id: id)
-        if let movie = result {
-            return movieMapper.map(movie)
-        }
-        return nil
+    public func getMovie(id: Int) async throws -> Movie? {
+        try await coreDataStack.getMovie(id: id, movieMapper: movieMapper)
     }
 
-    func addMovies(_ movies: [Movie]) async throws {
+    public func addMovies(_ movies: [Movie]) async throws {
         try await coreDataStack.performWrite { [movieEntityMapper] context in
             for movie in movies {
                 _ = movieEntityMapper.map(movie, context: context)
@@ -59,27 +53,24 @@ final class MovieRepository: RepositoryProtocol {
         }
     }
 
-    func addMovie(_ movie: Movie) async throws {
+    public func addMovie(_ movie: Movie) async throws {
         try await coreDataStack.performWrite { [movieEntityMapper] context in
             _ = movieEntityMapper.map(movie, context: context)
         }
     }
 
-    func addFavouriteMovie(_ movie: FavouriteMovie) async throws {
+    public func addFavouriteMovie(_ movie: FavouriteMovie) async throws {
         try await coreDataStack.performWrite { context in
             let favMovie = FavouriteMovieEntity(context: context)
             favMovie.id = Int64(movie.id)
         }
     }
 
-    func removeFavouriteMovie(_ movie: FavouriteMovie) async throws {
+    public func removeFavouriteMovie(_ movie: FavouriteMovie) async throws {
         try await coreDataStack.deleteFavouriteMovie(id: movie.id)
     }
 
-    func getFavouriteMovies() async throws -> [FavouriteMovie] {
-        let favouriteMovieEntities = try await coreDataStack.fetchFavouriteMovies()
-        return favouriteMovieEntities.map { favouriteMovieEntity in
-            favoriteMovieMapper.map(favouriteMovieEntity)
-        }
+    public func getFavouriteMovies() async throws -> [FavouriteMovie] {
+        try await coreDataStack.fetchFavouriteMovies(favouriteMovieMapper: favoriteMovieMapper)
     }
 }

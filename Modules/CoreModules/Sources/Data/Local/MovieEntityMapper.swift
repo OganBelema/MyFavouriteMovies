@@ -7,7 +7,10 @@
 import CoreData
 import Domain
 
-struct MovieEntityMapper: PersistenceMapperProtocol {
+public struct MovieEntityMapper: PersistenceMapperProtocol, Sendable {
+
+    public init() {}
+
     func map(_ input: Movie, context: NSManagedObjectContext) -> MovieEntity {
         let movieEntity = MovieEntity(context: context)
         movieEntity.id = Int64(input.id)

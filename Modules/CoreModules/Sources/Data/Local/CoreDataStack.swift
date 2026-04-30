@@ -5,6 +5,7 @@
 //  Created by Belema on 21/04/2026.
 //
 import CoreData
+import Domain
 
 public final class CoreDataStack: Sendable {
     public static let shared = CoreDataStack()
@@ -28,7 +29,7 @@ public final class CoreDataStack: Sendable {
         }
     }
 
-    public func getMovie(id: Int) async throws -> MovieEntity? {
+    public func getMovie(id: Int, movieMapper: MovieMapper) async throws -> Movie? {
         let context = persistentContainer.newBackgroundContext()
         return try await withCheckedThrowingContinuation { continuation in
             do {
@@ -36,21 +37,27 @@ public final class CoreDataStack: Sendable {
                 let predicate = NSPredicate(format: "id = %@", id)
                 request.predicate = predicate
                 let result = try context.fetch(request).first
-                continuation.resume(returning: result)
+                let movie = result.map { movieEntity in
+                    movieMapper.map(movieEntity)
+                }
+                continuation.resume(returning: movie)
             } catch {
                 continuation.resume(throwing: error)
             }
         }
     }
 
-    public func fetchMovies() async throws -> [MovieEntity] {
+    public func fetchMovies(movieMapper: MovieMapper) async throws -> [Movie] {
         let context = persistentContainer.newBackgroundContext()
         return try await withCheckedThrowingContinuation { continuation in
             context.perform {
                 let request: NSFetchRequest<MovieEntity> = MovieEntity.fetchRequest()
                 do {
                     let result = try context.fetch(request)
-                    continuation.resume(returning: result)
+                    let movies = result.map { movieEntity in
+                        movieMapper.map(movieEntity)
+                    }
+                    continuation.resume(returning: movies)
                 } catch {
                     continuation.resume(throwing: error)
                 }
@@ -58,20 +65,23 @@ public final class CoreDataStack: Sendable {
         }
     }
 
-    public func fetchFavouriteMovies() async throws -> [FavouriteMovieEntity] {
+    public func fetchFavouriteMovies(favouriteMovieMapper: FavouriteMovieMapper) async throws -> [FavouriteMovie] {
         let context = persistentContainer.newBackgroundContext()
         return try await withCheckedThrowingContinuation { continuation in
             let request: NSFetchRequest<FavouriteMovieEntity> = FavouriteMovieEntity.fetchRequest()
             do {
                 let result = try context.fetch(request)
-                continuation.resume(returning: result)
+                let favouriteMovies = result.map { favouriteMovieEntity in
+                    favouriteMovieMapper.map(favouriteMovieEntity)
+                }
+                continuation.resume(returning: favouriteMovies)
             } catch {
                 continuation.resume(throwing: error)
             }
         }
     }
 
-    public func fetchFavouriteMovie(id: Int) async throws -> FavouriteMovieEntity? {
+    public func fetchFavouriteMovie(id: Int, favouriteMovieMapper: FavouriteMovieMapper) async throws -> FavouriteMovie? {
         let context = persistentContainer.newBackgroundContext()
         return try await withCheckedThrowingContinuation { continuation in
             context.perform {
@@ -80,7 +90,10 @@ public final class CoreDataStack: Sendable {
                 request.predicate = predicate
                 do {
                     let result = try context.fetch(request).first
-                    continuation.resume(returning: result)
+                    let favouriteMovie = result.map { favouriteMovieEntity in
+                        favouriteMovieMapper.map(favouriteMovieEntity)
+                    }
+                    continuation.resume(returning: favouriteMovie)
                 } catch {
                     continuation.resume(throwing: error)
                 }
@@ -101,7 +114,13 @@ public final class CoreDataStack: Sendable {
     }
 
     private init () {
-        persistentContainer = NSPersistentContainer(name: "MovieModel")
+        // 1. Find the compiled model file (.momd) in the PACKAGE bundle
+        guard let modelURL = Bundle.module.url(forResource: "MovieModel", withExtension: "momd"),
+              let model = NSManagedObjectModel(contentsOf: modelURL) else {
+            fatalError("CoreDataStack: Could not find MovieModel.momd in Bundle.module")
+        }
+
+        persistentContainer = NSPersistentContainer(name: "MovieModel", managedObjectModel: model)
 
         persistentContainer.loadPersistentStores { _, error in
             if let error {
