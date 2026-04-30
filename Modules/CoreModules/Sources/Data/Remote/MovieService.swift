@@ -9,11 +9,11 @@ public class MovieService: MovieServiceProtocol {
     private let networkService: NetworkServiceProtocol
     private let endpoint = "3/movie/popular"
 
-    init(networkService: NetworkServiceProtocol) {
+    public init(networkService: NetworkServiceProtocol) {
         self.networkService = networkService
     }
     
-    func fetchPopularMovies() async throws -> MovieResponseDTO {
+    public func fetchPopularMovies() async throws -> MovieResponseDTO {
         try await networkService.fetch(endpoint: endpoint)
     }
 }

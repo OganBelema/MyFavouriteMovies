@@ -8,15 +8,15 @@
 public class MovieInteractor: MovieInteractorProtocol {
     private let repository: RepositoryProtocol
 
-    init(repository: RepositoryProtocol) {
+    public init(repository: RepositoryProtocol) {
         self.repository = repository
     }
 
-    func getMovies() async throws -> [Movie] {
+    public func getMovies() async throws -> [Movie] {
         try await repository.getMovies()
     }
 
-    func toggleFavourite(movieId: Int) async throws {
+    public func toggleFavourite(movieId: Int) async throws {
         let movie = try await getFavourites().first(where: { favMovie in
             favMovie.id == movieId
         })
@@ -28,7 +28,7 @@ public class MovieInteractor: MovieInteractorProtocol {
         }
     }
 
-    func getFavourites() async throws -> [Movie] {
+    public func getFavourites() async throws -> [Movie] {
         let favouriteMovies = try await getFavouriteMovies()
         let favouriteMovieIds = Set(favouriteMovies.map(\.id))
         return try await repository.getMovies().filter { movie in

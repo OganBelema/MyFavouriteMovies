@@ -5,7 +5,7 @@
 //  Created by Belema on 16/04/2026.
 //
 
-struct MovieResponseDTO: Codable {
+public struct MovieResponseDTO: Codable, Sendable {
     let page: Int
     let results: [MovieDTO]
     let totalPages: Int

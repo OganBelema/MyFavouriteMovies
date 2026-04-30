@@ -7,14 +7,14 @@
 
 import Foundation
 
-final class NetworkService: NetworkServiceProtocol {
+public final class NetworkService: NetworkServiceProtocol {
     private let config: APIConfig
 
     public init(config: APIConfig) {
         self.config = config
     }
 
-    func fetch<T: Decodable>(endpoint: String) async throws -> T {
+    public func fetch<T: Decodable>(endpoint: String) async throws -> T {
         guard let url = URL(string: config.baseURL + endpoint) else { throw URLError(.badURL) }
 
         var request = URLRequest(url: url)
