@@ -9,4 +9,5 @@ public protocol MovieInteractorProtocol {
     func getMovies() async throws -> [Movie]
     func toggleFavourite(movieId: Int) async throws
     func getFavourites() async throws -> [Movie]
+    func getFavouriteIds() async throws -> Set<Int>
 }

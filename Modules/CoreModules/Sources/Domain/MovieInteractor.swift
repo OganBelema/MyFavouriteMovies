@@ -36,6 +36,11 @@ public class MovieInteractor: MovieInteractorProtocol {
         }
     }
 
+    public func getFavouriteIds() async throws -> Set<Int> {
+        let favouriteMovies = try await getFavouriteMovies()
+        return Set(favouriteMovies.map(\.id))
+    }
+
     private func getFavouriteMovies() async throws -> [FavouriteMovie] {
         try await repository.getFavouriteMovies()
     }

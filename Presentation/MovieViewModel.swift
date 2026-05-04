@@ -14,16 +14,15 @@ class MovieViewModel: ObservableObject {
     @Published var uiState: MovieUIState = .nothing
     private let movieInteractor: MovieInteractorProtocol
 
-    init(movieInteractor: MovieInteractor) {
+    init(movieInteractor: MovieInteractorProtocol) {
         self.movieInteractor = movieInteractor
     }
 
-    @MainActor
     func loadMovies() async {
         do {
             uiState = .loading
             let movies = try await movieInteractor.getMovies()
-            let favouriteMovies = try await movieInteractor.getFavourites()
+            let favouriteIds = try await movieInteractor.getFavouriteIds()
             let movieUIData = movies.map { item in
                 MovieUIData(
                     id: item.id,
@@ -33,9 +32,7 @@ class MovieViewModel: ObservableObject {
                     posterPath: item.posterPath,
                     popularity: item.popularity,
                     voteAverage: item.voteAverage,
-                    isFavorite: favouriteMovies.contains(where: { favMovie in
-                        item.id == favMovie.id
-                    })
+                    isFavorite: favouriteIds.contains(item.id)
                 )
             }
             uiState = .loaded(movieUIData)
