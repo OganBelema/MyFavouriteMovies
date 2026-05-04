@@ -32,17 +32,18 @@ public final class CoreDataStack: Sendable {
     public func getMovie(id: Int, movieMapper: MovieMapper) async throws -> Movie? {
         let context = persistentContainer.newBackgroundContext()
         return try await withCheckedThrowingContinuation { continuation in
-            do {
-                let request = MovieEntity.fetchRequest()
-                let predicate = NSPredicate(format: "id = %@", id)
-                request.predicate = predicate
-                let result = try context.fetch(request).first
-                let movie = result.map { movieEntity in
-                    movieMapper.map(movieEntity)
+            context.perform {
+                do {
+                    let request = MovieEntity.fetchRequest()
+                    request.predicate = NSPredicate(format: "id = %d", id)
+                    let result = try context.fetch(request).first
+                    let movie = result.map { movieEntity in
+                        movieMapper.map(movieEntity)
+                    }
+                    continuation.resume(returning: movie)
+                } catch {
+                    continuation.resume(throwing: error)
                 }
-                continuation.resume(returning: movie)
-            } catch {
-                continuation.resume(throwing: error)
             }
         }
     }
@@ -68,15 +69,17 @@ public final class CoreDataStack: Sendable {
     public func fetchFavouriteMovies(favouriteMovieMapper: FavouriteMovieMapper) async throws -> [FavouriteMovie] {
         let context = persistentContainer.newBackgroundContext()
         return try await withCheckedThrowingContinuation { continuation in
-            let request: NSFetchRequest<FavouriteMovieEntity> = FavouriteMovieEntity.fetchRequest()
-            do {
-                let result = try context.fetch(request)
-                let favouriteMovies = result.map { favouriteMovieEntity in
-                    favouriteMovieMapper.map(favouriteMovieEntity)
+            context.perform {
+                let request: NSFetchRequest<FavouriteMovieEntity> = FavouriteMovieEntity.fetchRequest()
+                do {
+                    let result = try context.fetch(request)
+                    let favouriteMovies = result.map { favouriteMovieEntity in
+                        favouriteMovieMapper.map(favouriteMovieEntity)
+                    }
+                    continuation.resume(returning: favouriteMovies)
+                } catch {
+                    continuation.resume(throwing: error)
                 }
-                continuation.resume(returning: favouriteMovies)
-            } catch {
-                continuation.resume(throwing: error)
             }
         }
     }
@@ -86,7 +89,7 @@ public final class CoreDataStack: Sendable {
         return try await withCheckedThrowingContinuation { continuation in
             context.perform {
                 let request = FavouriteMovieEntity.fetchRequest()
-                let predicate = NSPredicate(format: "id = %@", id)
+                let predicate = NSPredicate(format: "id = %d", id)
                 request.predicate = predicate
                 do {
                     let result = try context.fetch(request).first
@@ -113,7 +116,7 @@ public final class CoreDataStack: Sendable {
         }
     }
 
-    private init () {
+    public init(isInMemory: Bool = false) {
         // 1. Find the compiled model file (.momd) in the PACKAGE bundle
         guard let modelURL = Bundle.module.url(forResource: "MovieModel", withExtension: "momd"),
               let model = NSManagedObjectModel(contentsOf: modelURL) else {
@@ -121,6 +124,12 @@ public final class CoreDataStack: Sendable {
         }
 
         persistentContainer = NSPersistentContainer(name: "MovieModel", managedObjectModel: model)
+
+        if isInMemory {
+            let description = NSPersistentStoreDescription()
+            description.url = URL(fileURLWithPath: "/dev/null")
+            persistentContainer.persistentStoreDescriptions = [description]
+        }
 
         persistentContainer.loadPersistentStores { _, error in
             if let error {

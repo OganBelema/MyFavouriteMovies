@@ -4,6 +4,7 @@
 //
 //  Created by Belema on 22/04/2026.
 //
+import CoreData
 import Domain
 
 public struct MovieMapper: MapperProtocol, Sendable {

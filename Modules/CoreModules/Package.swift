@@ -5,7 +5,7 @@ import PackageDescription
 
 let package = Package(
     name: "CoreModules",
-    platforms: [.iOS(.v13)],
+    platforms: [.iOS(.v13), .macOS(.v12)],
     products: [
         .library(name: "Domain", targets: ["Domain"]),
         .library(name: "Data", targets: ["Data"])
@@ -22,6 +22,10 @@ let package = Package(
             name: "Data",
             dependencies: ["Domain"],
             resources: [.process("Resources/MovieModel.xcdatamodeld")]
+        ),
+        .testTarget(
+            name: "DataTests",
+            dependencies: ["Data", "Domain"]
         )
     ],
     swiftLanguageModes: [.v6]
