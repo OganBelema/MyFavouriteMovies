@@ -43,7 +43,8 @@ class MovieViewModel: ObservableObject {
     }
 
     func setFavourite(movieId: Int) {
-        Task {
+        Task { [weak self] in
+            guard let self else { return }
             do {
                 // 1. Extract the current movies from the Enum
                 guard case .loaded(var movies) = uiState else { return }
