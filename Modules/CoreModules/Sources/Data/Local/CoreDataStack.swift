@@ -53,6 +53,7 @@ public final class CoreDataStack: Sendable {
         return try await withCheckedThrowingContinuation { continuation in
             context.perform {
                 let request: NSFetchRequest<MovieEntity> = MovieEntity.fetchRequest()
+                request.sortDescriptors = [NSSortDescriptor(key: "createdAt", ascending: true)]
                 do {
                     let result = try context.fetch(request)
                     let movies = result.map { movieEntity in
