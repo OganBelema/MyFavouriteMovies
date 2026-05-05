@@ -10,12 +10,14 @@ import SwiftUI
 
 struct MoviesView: View {
     @ObservedObject var viewModel: MovieViewModel
+    @Environment(\.colorScheme) var colorScheme
+    @EnvironmentObject var coordinator: MovieCoordinator
 
     var body: some View {
         Group {
             switch viewModel.uiState {
                 case .nothing:
-                    EmptyView()
+                    Color.clear
                 case .loading:
                     ProgressView()
                 case .loaded(let movies):
@@ -47,6 +49,7 @@ struct MoviesView: View {
                                 Text(movie.overview)
                                     .font(.body)
                                     .padding(.horizontal, 8)
+                                Spacer()
                             }
                             .overlay(alignment: .topTrailing, content: {
                                 Button {
@@ -61,14 +64,20 @@ struct MoviesView: View {
                                 }
                                 .padding(8) // Offset from the very edge
                             })
-                            .clipShape(RoundedRectangle(cornerRadius:12))
+                            .background(colorScheme == .dark ? Color.black : Color.white)
+                            .cornerRadius(10)
+                            .shadow(color: .gray, radius: 5, x: 0, y: 2)
                             .padding()
+                            .onTapGesture {
+                                coordinator.push(.detail(movie))
+                            }
                         }
                     }
-                case .error(let errorMessage):
+                case .error(_):
                     EmptyView()
             }
         }
+        .navigationTitle("Movies")
         .task {
             await viewModel.loadMovies()
         }

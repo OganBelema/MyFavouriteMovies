@@ -5,7 +5,7 @@
 //  Created by Belema on 04/05/2026.
 //
 
-struct MovieUIData {
+struct MovieUIData: Hashable, Identifiable {
     let id: Int
     let title: String
     let releaseDate: String

@@ -11,29 +11,17 @@ import SwiftUI
 
 @main
 struct MyFavouriteMoviesApp: App {
+    @StateObject private var coordinator = MovieCoordinator()
+
     var body: some Scene {
         WindowGroup {
-            MoviesView(
-                viewModel: MovieViewModel(
-                    movieInteractor: MovieInteractor(
-                        repository: MovieRepository(
-                            movieService: MovieService(
-                                networkService: NetworkService(
-                                    config: APIConfig(
-                                        baseURL: ApiConstants.baseURL,
-                                        apiKey: ApiConstants.apiKey
-                                    )
-                                )
-                            ),
-                            coreDataStack: CoreDataStack.shared,
-                            movieDTOMapper: MovieDTOMapper(),
-                            movieMapper: MovieMapper(),
-                            movieEntityMapper: MovieEntityMapper(),
-                            favoriteMovieMapper: FavouriteMovieMapper()
-                        )
-                    )
-                )
-            )
+            NavigationStack(path: $coordinator.path) {
+                coordinator.build(.movieList)
+                    .navigationDestination(for: MoviePage.self) { page in
+                        coordinator.build(page)
+                    }
+            }
+            .environmentObject(coordinator)
         }
     }
 }
