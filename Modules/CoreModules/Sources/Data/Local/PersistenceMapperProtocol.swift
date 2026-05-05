@@ -4,7 +4,6 @@
 //
 //  Created by Belema on 29/04/2026.
 //
-import Domain
 
 protocol PersistenceMapperProtocol {
     associatedtype Input

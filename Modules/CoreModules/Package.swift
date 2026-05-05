@@ -29,7 +29,7 @@ let package = Package(
         ),
         .testTarget(
             name: "DomainTests",
-            dependencies: []
+            dependencies: ["Domain"]
         )
     ],
     swiftLanguageModes: [.v6]

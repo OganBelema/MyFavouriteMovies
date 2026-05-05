@@ -17,20 +17,18 @@ public class MovieInteractor: MovieInteractorProtocol {
     }
 
     public func toggleFavourite(movieId: Int) async throws {
-        let movie = try await getFavourites().first(where: { favMovie in
-            favMovie.id == movieId
-        })
+        let favouriteIds = try await getFavouriteIds()
+        let isFavourite = favouriteIds.contains(movieId)
 
-        if let movie {
-            try await repository.removeFavouriteMovie(FavouriteMovie(id: movie.id))
+        if isFavourite {
+            try await repository.removeFavouriteMovie(FavouriteMovie(id: movieId))
         } else {
             try await repository.addFavouriteMovie(FavouriteMovie(id: movieId))
         }
     }
 
     public func getFavourites() async throws -> [Movie] {
-        let favouriteMovies = try await getFavouriteMovies()
-        let favouriteMovieIds = Set(favouriteMovies.map(\.id))
+        let favouriteMovieIds = try await getFavouriteIds()
         return try await repository.getMovies().filter { movie in
             favouriteMovieIds.contains(movie.id)
         }
