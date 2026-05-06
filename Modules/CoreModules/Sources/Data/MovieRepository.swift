@@ -38,6 +38,10 @@ public final class MovieRepository: RepositoryProtocol {
                 _ = movieDTOMapper.map(movie, context: context)
             }
         }
+        return try await getCachedMovies()
+    }
+
+    func getCachedMovies() async throws -> [Movie] {
         return try await coreDataStack.fetchMovies(movieMapper: movieMapper)
     }
 
