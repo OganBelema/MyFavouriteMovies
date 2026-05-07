@@ -16,6 +16,7 @@
 		848D8B792FA88E6E00265322 /* MovieUIState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848D8B782FA88E6600265322 /* MovieUIState.swift */; };
 		84A541412FAA6BC3006AA487 /* MovieDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A541402FAA6BBD006AA487 /* MovieDetailView.swift */; };
 		84A541452FAA7BCE006AA487 /* MovieCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A541442FAA7BCE006AA487 /* MovieCoordinator.swift */; };
+		84A541472FAB7669006AA487 /* MovieCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A541462FAB7669006AA487 /* MovieCard.swift */; };
 		84D72C232F968DCA00CF5438 /* Data in Frameworks */ = {isa = PBXBuildFile; productRef = 84D72C222F968DCA00CF5438 /* Data */; };
 		84D72C252F968DCA00CF5438 /* Domain in Frameworks */ = {isa = PBXBuildFile; productRef = 84D72C242F968DCA00CF5438 /* Domain */; };
 /* End PBXBuildFile section */
@@ -52,6 +53,7 @@
 		848D8B782FA88E6600265322 /* MovieUIState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieUIState.swift; sourceTree = "<group>"; };
 		84A541402FAA6BBD006AA487 /* MovieDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailView.swift; sourceTree = "<group>"; };
 		84A541442FAA7BCE006AA487 /* MovieCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieCoordinator.swift; sourceTree = "<group>"; };
+		84A541462FAB7669006AA487 /* MovieCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieCard.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -129,6 +131,7 @@
 			children = (
 				84A541402FAA6BBD006AA487 /* MovieDetailView.swift */,
 				84A541442FAA7BCE006AA487 /* MovieCoordinator.swift */,
+				84A541462FAB7669006AA487 /* MovieCard.swift */,
 				848D8B782FA88E6600265322 /* MovieUIState.swift */,
 				848D8B762FA88BBE00265322 /* MovieUIData.swift */,
 				848D8B6F2FA3BBCA00265322 /* MovieViewModel.swift */,
@@ -315,6 +318,7 @@
 				84A541452FAA7BCE006AA487 /* MovieCoordinator.swift in Sources */,
 				848D8B702FA3BBD500265322 /* MovieViewModel.swift in Sources */,
 				84A541412FAA6BC3006AA487 /* MovieDetailView.swift in Sources */,
+				84A541472FAB7669006AA487 /* MovieCard.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
