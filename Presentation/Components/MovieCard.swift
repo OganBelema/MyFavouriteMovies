@@ -17,6 +17,8 @@ struct MovieCard: View {
                             .scaledToFill()
                     case .failure:
                         Image(systemName: "photo")
+                            .resizable()
+                            .scaledToFill()
                             .foregroundColor(.gray)
                     case .empty:
                         ProgressView()
