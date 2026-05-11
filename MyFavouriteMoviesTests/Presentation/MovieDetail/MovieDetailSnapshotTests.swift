@@ -24,7 +24,7 @@ class MovieDetailSnapshotTests: XCTestCase {
         )
         let view = MovieDetailView(movie: movie)
         let vc = UIHostingController(rootView: view)
-        assertSnapshot(of: vc, as: .image(on: .iPhone13Pro), record: true)
+        assertSnapshot(of: vc, as: .image(on: .iPhone13Pro))
     }
 
     func testMovieDetailView_DarkMode() {
@@ -43,8 +43,7 @@ class MovieDetailSnapshotTests: XCTestCase {
         let vc = UIHostingController(rootView: view)
         assertSnapshot(
             of: vc,
-            as: .image(on: .iPhone13Pro, traits: .init(userInterfaceStyle: .dark)),
-            record: true
+            as: .image(on: .iPhone13Pro, traits: .init(userInterfaceStyle: .dark))
         )
     }
 }
