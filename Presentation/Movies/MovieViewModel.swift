@@ -20,6 +20,10 @@ class MovieViewModel: ObservableObject {
 
     func loadMovies() async {
         do {
+            if case .loaded(_) = uiState {
+                return
+            }
+
             uiState = .loading
             let movies = try await movieInteractor.getMovies()
             let favouriteIds = try await movieInteractor.getFavouriteIds()
