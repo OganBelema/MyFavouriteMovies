@@ -32,8 +32,10 @@ struct MoviesView: View {
                             }
                         }
                     }
-                case .error(_):
-                    Color.clear
+                case .error(let errorMessage):
+                    Text(errorMessage)
+                        .font(.title)
+                        .padding()
             }
         }
         .navigationTitle("Movies")

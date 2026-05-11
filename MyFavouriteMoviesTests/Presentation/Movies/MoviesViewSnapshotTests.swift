@@ -41,6 +41,36 @@ class MoviesViewSnapshotTests: XCTestCase {
         assertSnapshot(of: vc, as: .image(on: .iPhone13Pro))
     }
 
+    func testMoviesView_errorState() {
+        let mockInteractor = MockMovieInteractor()
+        let movie = Movie(
+            id: 1,
+            title: "Test Movie",
+            releaseDate: "2026-01-01",
+            overview: "Overview",
+            posterPath: "/path",
+            popularity: 10.0,
+            voteAverage: 8.0
+        )
+        let movie2 = Movie(
+            id: 2,
+            title: "Inception",
+            releaseDate: "2010-07-16",
+            overview: "Dom Cobb (Leonardo DiCaprio) is a thief with the rare ability to enter people's dreams and steal their secrets from their...",
+            posterPath: "",
+            popularity: 90.0,
+            voteAverage: 8.0
+        )
+        mockInteractor.movies = [movie, movie2]
+        mockInteractor.favouriteIds = [1]
+        let errorMessage = "No internet connection"
+        mockInteractor.getMoviesError = NSError(domain: "test", code: 1, userInfo: [NSLocalizedDescriptionKey: errorMessage])
+        let viewmodel = MovieViewModel(movieInteractor: mockInteractor)
+        let view = MoviesView(viewModel: viewmodel)
+        let vc = UIHostingController(rootView: view)
+        assertSnapshot(of: vc, as: .image(on: .iPhone13Pro), record: true)
+    }
+
     func testMoviesView_DarkMode() {
         let mockInteractor = MockMovieInteractor()
         let movie = Movie(
