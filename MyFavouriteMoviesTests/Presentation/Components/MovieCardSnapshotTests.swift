@@ -25,7 +25,7 @@ class MovieCardSnapshotTests: XCTestCase {
 
         let view = MovieCard(movie: movie, onFavouriteToggle: {}, onTap: {})
         let vc = UIHostingController(rootView: view)
-        assertSnapshot(of: vc, as: .image(on: .iPhone13Pro), record: true)
+        assertSnapshot(of: vc, as: .image(on: .iPhone13Pro))
     }
 
     func testMovieCard_DarkMode() {
@@ -44,6 +44,6 @@ class MovieCardSnapshotTests: XCTestCase {
             .colorScheme(.dark)
 
         let vc = UIHostingController(rootView: view)
-        assertSnapshot(of: vc, as: .image(on: .iPhone13Pro), record: true)
+        assertSnapshot(of: vc, as: .image(on: .iPhone13Pro))
     }
 }
