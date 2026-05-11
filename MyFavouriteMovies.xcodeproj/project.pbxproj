@@ -12,6 +12,10 @@
 		841767F22FB210F300925E26 /* MyFavouriteMoviesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 841767EE2FB210F300925E26 /* MyFavouriteMoviesTests.swift */; };
 		841767F62FB210FB00925E26 /* MyFavouriteMoviesUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 841767F32FB210FB00925E26 /* MyFavouriteMoviesUITests.swift */; };
 		841767F72FB210FB00925E26 /* MyFavouriteMoviesUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 841767F42FB210FB00925E26 /* MyFavouriteMoviesUITestsLaunchTests.swift */; };
+		841767FA2FB22D8100925E26 /* InlineSnapshotTesting in Frameworks */ = {isa = PBXBuildFile; productRef = 841767F92FB22D8100925E26 /* InlineSnapshotTesting */; };
+		841767FC2FB22D8100925E26 /* SnapshotTesting in Frameworks */ = {isa = PBXBuildFile; productRef = 841767FB2FB22D8100925E26 /* SnapshotTesting */; };
+		841767FE2FB22D8100925E26 /* SnapshotTestingCustomDump in Frameworks */ = {isa = PBXBuildFile; productRef = 841767FD2FB22D8100925E26 /* SnapshotTestingCustomDump */; };
+		841768012FB22F3100925E26 /* MovieCardSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 841768002FB22F2700925E26 /* MovieCardSnapshotTests.swift */; };
 		8461BA1A2F88DBB8004A62B6 /* MyFavouriteMoviesApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8461BA192F88DBB8004A62B6 /* MyFavouriteMoviesApp.swift */; };
 		8461BA1E2F88DBB9004A62B6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8461BA1D2F88DBB9004A62B6 /* Assets.xcassets */; };
 		848D8B6E2FA3BB7C00265322 /* MoviesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848D8B6D2FA3BB7500265322 /* MoviesView.swift */; };
@@ -49,6 +53,7 @@
 		841767EE2FB210F300925E26 /* MyFavouriteMoviesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyFavouriteMoviesTests.swift; sourceTree = "<group>"; };
 		841767F32FB210FB00925E26 /* MyFavouriteMoviesUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyFavouriteMoviesUITests.swift; sourceTree = "<group>"; };
 		841767F42FB210FB00925E26 /* MyFavouriteMoviesUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyFavouriteMoviesUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		841768002FB22F2700925E26 /* MovieCardSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieCardSnapshotTests.swift; sourceTree = "<group>"; };
 		8461BA162F88DBB8004A62B6 /* MyFavouriteMovies.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyFavouriteMovies.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8461BA192F88DBB8004A62B6 /* MyFavouriteMoviesApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyFavouriteMoviesApp.swift; sourceTree = "<group>"; };
 		8461BA1D2F88DBB9004A62B6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -88,6 +93,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				841767FE2FB22D8100925E26 /* SnapshotTestingCustomDump in Frameworks */,
+				841767FA2FB22D8100925E26 /* InlineSnapshotTesting in Frameworks */,
+				841767FC2FB22D8100925E26 /* SnapshotTesting in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -162,6 +170,7 @@
 		841767ED2FB210F300925E26 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				841767FF2FB22F1800925E26 /* Components */,
 				841767EC2FB210F300925E26 /* Movies */,
 			);
 			path = Presentation;
@@ -184,6 +193,14 @@
 				841767F42FB210FB00925E26 /* MyFavouriteMoviesUITestsLaunchTests.swift */,
 			);
 			path = MyFavouriteMoviesUITests;
+			sourceTree = "<group>";
+		};
+		841767FF2FB22F1800925E26 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				841768002FB22F2700925E26 /* MovieCardSnapshotTests.swift */,
+			);
+			path = Components;
 			sourceTree = "<group>";
 		};
 		8461BA0D2F88DBB8004A62B6 = {
@@ -290,6 +307,9 @@
 			);
 			name = MyFavouriteMoviesTests;
 			packageProductDependencies = (
+				841767F92FB22D8100925E26 /* InlineSnapshotTesting */,
+				841767FB2FB22D8100925E26 /* SnapshotTesting */,
+				841767FD2FB22D8100925E26 /* SnapshotTestingCustomDump */,
 			);
 			productName = MyFavouriteMoviesTests;
 			productReference = 8461BA232F88DBB9004A62B6 /* MyFavouriteMoviesTests.xctest */;
@@ -347,6 +367,9 @@
 			);
 			mainGroup = 8461BA0D2F88DBB8004A62B6;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				841767F82FB22D8100925E26 /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 8461BA172F88DBB8004A62B6 /* Products */;
 			projectDirPath = "";
@@ -405,6 +428,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				841768012FB22F3100925E26 /* MovieCardSnapshotTests.swift in Sources */,
 				841767F02FB210F300925E26 /* MockMovieInteractor.swift in Sources */,
 				841767F12FB210F300925E26 /* MovieViewModelTests.swift in Sources */,
 				841767F22FB210F300925E26 /* MyFavouriteMoviesTests.swift in Sources */,
@@ -746,7 +770,33 @@
 		};
 /* End XCConfigurationList section */
 
+/* Begin XCRemoteSwiftPackageReference section */
+		841767F82FB22D8100925E26 /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pointfreeco/swift-snapshot-testing";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.19.2;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
 /* Begin XCSwiftPackageProductDependency section */
+		841767F92FB22D8100925E26 /* InlineSnapshotTesting */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 841767F82FB22D8100925E26 /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */;
+			productName = InlineSnapshotTesting;
+		};
+		841767FB2FB22D8100925E26 /* SnapshotTesting */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 841767F82FB22D8100925E26 /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */;
+			productName = SnapshotTesting;
+		};
+		841767FD2FB22D8100925E26 /* SnapshotTestingCustomDump */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 841767F82FB22D8100925E26 /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */;
+			productName = SnapshotTestingCustomDump;
+		};
 		84D72C222F968DCA00CF5438 /* Data */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Data;
