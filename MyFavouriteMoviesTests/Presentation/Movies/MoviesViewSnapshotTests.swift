@@ -68,7 +68,7 @@ class MoviesViewSnapshotTests: XCTestCase {
         let viewmodel = MovieViewModel(movieInteractor: mockInteractor)
         let view = MoviesView(viewModel: viewmodel)
         let vc = UIHostingController(rootView: view)
-        assertSnapshot(of: vc, as: .image(on: .iPhone13Pro), record: true)
+        assertSnapshot(of: vc, as: .image(on: .iPhone13Pro))
     }
 
     func testMoviesView_DarkMode() {
