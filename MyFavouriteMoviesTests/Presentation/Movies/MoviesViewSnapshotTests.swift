@@ -67,6 +67,9 @@ class MoviesViewSnapshotTests: XCTestCase {
         let view = MoviesView(viewModel: viewmodel)
             .colorScheme(.dark)
         let vc = UIHostingController(rootView: view)
-        assertSnapshot(of: vc, as: .image(on: .iPhone13Pro))
+        assertSnapshot(
+            of: vc,
+            as: .image(on: .iPhone13Pro, traits: .init(userInterfaceStyle: .dark))
+        )
     }
 }
