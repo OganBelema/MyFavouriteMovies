@@ -32,13 +32,15 @@ The project follows **Clean Architecture** principles to ensure separation of co
 - **Swift Concurrency**: `async/await` and `Actors` for safe, readable asynchronous code.
 - **Core Data**: Robust local data persistence.
 - **Swift Package Manager (SPM)**: Modularized project structure with a dedicated `CoreModules` package.
-- **XCTest**: Comprehensive unit test suite for Interactors, Repositories, and the Core Data stack.
+- **XCTest & Swift Testing**: Comprehensive unit test suite for all layers.
+- **Swift Snapshot Testing**: Visual regression testing for SwiftUI components and views.
 
 ## 📦 Project Structure
 
 ```text
 ├── App/                # App entry point & configuration
 ├── Presentation/       # UI Layer (Views, Components, Coordinators)
+├── MyFavouriteMoviesTests/ # App-level tests (ViewModels & Snapshots)
 └── Modules/
     └── CoreModules/    # Swift Package containing:
         ├── Domain/     # Business Logic & Interfaces
@@ -47,21 +49,24 @@ The project follows **Clean Architecture** principles to ensure separation of co
 
 ## 🧪 Testing
 
-The project maintains a high test coverage across all layers, utilizing both **XCTest** and the modern **Swift Testing** framework.
+The project maintains high test coverage across all layers, ensuring both functional correctness and visual consistency.
 
 ### Test Structure:
-- **Presentation Tests**: Located in the `MyFavouriteMoviesTests/` directory of the main app target. These tests use **Swift Testing** to verify ViewModels and UI state logic.
-- **Core Logic Tests**: Located within the `CoreModules` Swift Package. These cover Domain Interactors and Data Repositories using **XCTest**.
+- **Unit Tests (Swift Testing)**: Located in `MyFavouriteMoviesTests/`. Verifies ViewModels, state transitions, and business logic.
+- **Snapshot Tests (XCTest)**: Located in `MyFavouriteMoviesTests/`. Uses [swift-snapshot-testing](https://github.com/pointfreeco/swift-snapshot-testing) to prevent visual regressions in UI components.
+- **Core Logic Tests (XCTest)**: Located in `Modules/CoreModules/Tests/`. Covers Domain Interactors and Data Repositories.
 
 ### Key Test Features:
-- **Mocking Strategy**: Comprehensive mocks (e.g., `MockMovieInteractor`, `MockRepository`) ensure that each layer is tested in complete isolation.
-- **In-Memory Core Data**: Persistence tests run against a volatile RAM database to ensure speed and isolation without polluting local storage.
-- **Async Verification**: Robust testing of `async/await` flows and optimistic UI updates.
+- **Visual Regression**: Snapshots are taken for key UI components (like `MovieCard`) and full screens in both **Light** and **Dark** modes.
+- **Mocking Strategy**: Comprehensive mocks ensure that each layer is tested in isolation.
+- **In-Memory Core Data**: Persistence tests run against a volatile RAM database for speed and isolation.
 
 To run tests:
 1. Open the project in Xcode.
 2. Ensure the **MyFavouriteMovies** scheme is selected.
-3. Press `Cmd + U` to run all tests across both the app target and internal modules.
+3. Press `Cmd + U` to run all tests, including unit and snapshot tests.
+
+> **Note**: Snapshot reference images are stored in `__Snapshots__` directories and should be committed to version control.
 
 ## ⚙️ Configuration
 
