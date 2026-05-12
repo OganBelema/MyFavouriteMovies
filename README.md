@@ -68,6 +68,24 @@ To run tests:
 
 > **Note**: Snapshot reference images are stored in `__Snapshots__` directories and should be committed to version control.
 
+## 🤖 Gemini CLI Integration
+
+This project is optimized for AI-assisted development using **Gemini CLI**. It includes project-specific configurations and context to help AI agents understand the architecture and coding standards.
+
+### Features:
+- **Project Context**: Optimized directory structure and naming conventions for better AI indexing.
+- **MCP Tools**: Integrates with `xcode-tools` via MCP (Model Context Protocol) for autonomous building, testing, and UI rendering.
+- **Automated Workflows**: Ready for AI-driven refactoring, documentation updates, and test generation.
+
+### Using Gemini CLI:
+If you have Gemini CLI installed, you can use it to perform complex tasks:
+```bash
+# Example commands
+gemini "Refactor MovieViewModel to use Swift Testing"
+gemini "Add snapshot tests for the MovieDetailView"
+gemini "Audit the project for architectural inconsistencies"
+```
+
 ## ⚙️ Configuration
 
 The app requires a TMDB API key to fetch movie data.
