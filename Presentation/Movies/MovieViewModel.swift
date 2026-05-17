@@ -25,8 +25,12 @@ class MovieViewModel: ObservableObject {
             }
 
             uiState = .loading
-            let movies = try await movieInteractor.getMovies()
-            let favouriteIds = try await movieInteractor.getFavouriteIds()
+
+            async let moviesRequest = movieInteractor.getMovies()
+            async let favouriteIdsRequest = movieInteractor.getFavouriteIds()
+
+            let (movies, favouriteIds) = try await(moviesRequest, favouriteIdsRequest)
+
             let movieUIData = movies.map { item in
                 MovieUIData(
                     id: item.id,
