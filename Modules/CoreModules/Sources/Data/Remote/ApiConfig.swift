@@ -5,7 +5,7 @@
 //  Created by Belema on 10/04/2026.
 //
 
-public struct APIConfig {
+public struct APIConfig: Sendable {
     public let baseURL: String
     public let apiKey: String
 

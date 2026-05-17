@@ -5,7 +5,7 @@
 //  Created by Belema on 20/04/2026.
 //
 
-public class MovieInteractor: MovieInteractorProtocol {
+public final class MovieInteractor: MovieInteractorProtocol {
     private let repository: RepositoryProtocol
 
     public init(repository: RepositoryProtocol) {

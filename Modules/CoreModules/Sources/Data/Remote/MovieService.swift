@@ -5,7 +5,7 @@
 //  Created by Belema on 10/04/2026.
 //
 
-public class MovieService: MovieServiceProtocol {
+public final class MovieService: MovieServiceProtocol {
     private let networkService: NetworkServiceProtocol
     private let endpoint = "3/movie/popular"
 

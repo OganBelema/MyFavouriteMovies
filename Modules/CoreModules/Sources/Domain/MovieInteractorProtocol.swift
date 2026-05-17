@@ -5,7 +5,7 @@
 //  Created by Belema on 20/04/2026.
 //
 
-public protocol MovieInteractorProtocol {
+public protocol MovieInteractorProtocol: Sendable {
     func getMovies() async throws -> [Movie]
     func toggleFavourite(movieId: Int) async throws
     func getFavourites() async throws -> [Movie]

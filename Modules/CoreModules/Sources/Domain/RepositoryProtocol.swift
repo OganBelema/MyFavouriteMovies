@@ -5,7 +5,7 @@
 //  Created by Belema on 17/04/2026.
 //
 
-public protocol RepositoryProtocol {
+public protocol RepositoryProtocol: Sendable {
     func getMovies() async throws -> [Movie]
     func getMovie(id: Int) async throws -> Movie?
     func addMovies(_ movies: [Movie]) async throws

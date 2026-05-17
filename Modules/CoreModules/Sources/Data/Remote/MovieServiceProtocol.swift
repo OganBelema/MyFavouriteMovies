@@ -5,6 +5,6 @@
 //  Created by Belema on 16/04/2026.
 //
 
-public protocol MovieServiceProtocol {
+public protocol MovieServiceProtocol: Sendable {
     func fetchPopularMovies() async throws -> MovieResponseDTO
 }
