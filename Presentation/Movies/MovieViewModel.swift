@@ -26,10 +26,14 @@ class MovieViewModel: ObservableObject {
 
             uiState = .loading
 
+            guard !Task.isCancelled else { return }
+
             async let moviesRequest = movieInteractor.getMovies()
             async let favouriteIdsRequest = movieInteractor.getFavouriteIds()
 
             let (movies, favouriteIds) = try await(moviesRequest, favouriteIdsRequest)
+
+            guard !Task.isCancelled else { return }
 
             let movieUIData = movies.map { item in
                 MovieUIData(
@@ -45,6 +49,9 @@ class MovieViewModel: ObservableObject {
             }
             uiState = .loaded(movieUIData)
         } catch {
+            if error is CancellationError {
+                return
+            }
             uiState = .error(error.localizedDescription)
             print(error.localizedDescription)
         }
